@@ -2,7 +2,7 @@ node default {
 
   $htpasswd = 'mypassword'
 
-  $ssl_cert = '-----BEGIN RSA PRIVATE KEY-----
+  $ssl_key = '-----BEGIN RSA PRIVATE KEY-----
 MIIEpgIBAAKCAQEAsm4YmILMCcrwTq5zf0EoWtYvljEqGA/8iDaYJb82zA1gBIZw
 xqBI3Fqu7PUInjypVscRwB/0yTOEnPCD9D284OqVdjuO9ztH+Y3PuIJX259+Ztrv
 xuJNB035gPF9lNKipI2wBohvHx8z8xUuaT88nZEES2yYEIfKL1IoQ3ZPTQlADX5U
@@ -28,8 +28,9 @@ lhoAjwdAxipKFzSokaRTzgKDZfuSn2rzcBF/Q/J7BQ9GLY2JMmsIrM1rmZZ7ryw5
 ihmeiX7pAoGBAIslpI2o+oGvqjddc+lLOe3lrIxQShsaDVktHCwUn2iXMk8houcZ
 LwiklfHedEuNOfix8207LvTTYSp/EoA1z9wm6uXtnegAVPrT0A6yuwr7zJ/RcR8/
 B8X0G6F1cCj4jGZ9c+cjDymcXq9K1i2M5wGPq82FsnkDEL4hmOx8J3Ld
------END RSA PRIVATE KEY-----
------BEGIN CERTIFICATE-----
+-----END RSA PRIVATE KEY-----'
+
+  $ssl_pem = '-----BEGIN CERTIFICATE-----
 MIIDajCCAlKgAwIBAgIJANgRfNiT89M4MA0GCSqGSIb3DQEBBQUAMCwxKjAoBgNV
 BAMTIWNhY3RpLmZ1Y2tib29rLnN0YWdpbmcuY2FyZ29tZWRpYTAeFw0xMzExMTEx
 NTIzMjhaFw0yMzExMDkxNTIzMjhaMCwxKjAoBgNVBAMTIWNhY3RpLmZ1Y2tib29r
@@ -59,7 +60,8 @@ GlRKt+QNr/ePIOSy8nE=
     hostname    => 'fuckbook.staging.cargomedia',
     db_host     => 'localhost',
     db_password => 'passwd',
-    ssl_cert    => $ssl_cert,
+    ssl_pem     => $ssl_pem,
+    ssl_key     => $ssl_key,
     htpasswd    => $htpasswd,
   }
   ->

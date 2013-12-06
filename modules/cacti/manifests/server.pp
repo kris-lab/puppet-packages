@@ -6,9 +6,10 @@ class cacti::server (
   $db_port      = 3306,
   $db_name      = 'cacti',
   $db_user      = 'cacti',
-  $db_password  = 'password',
-  $ssl_cert     = 'no key',
-  $htpasswd     = 'password'
+  $db_password  = 'dbpasswd',
+  $ssl_pem      = 'sslpem',
+  $ssl_key      = 'sslkey',
+  $htpasswd     = 'htpasswd'
 ) {
 
   require 'snmp'
@@ -42,10 +43,28 @@ class cacti::server (
     require => Class['cacti::package', 'apache2::mod::ssl'],
   }
 
-  file {'/etc/apache2/conf.d/cacti.conf':
-    ensure  => file,
+  file {"/etc/apache2/ssl/${hostname}.pem":
+    ensure => present,
+    content => $ssl_pem,
+    group => 'www-data',
+    owner => 'www-data',
+    mode => '0644',
+    require => Class['apache2::mod::ssl'],
+    before => Apache2::Vhost[$host],
+  }
+
+  file {"/etc/apache2/ssl/${hostname}.key":
+    ensure => present,
+    content => $ssl_key,
+    group => 'www-data',
+    owner => 'www-data',
+    mode => '0644',
+    require => Class['apache2::mod::ssl'],
+    before => Apache2::Vhost[$host],
+  }
+
+  apache2::vhost {$hostname:
     content => template('cacti/vhost'),
-    require => Class['cacti::package'],
   }
 
 }
